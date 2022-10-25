@@ -1,5 +1,8 @@
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
+import { ADD_CLIENT } from '../mutations/clientMutations';
+import { GET_CLIENTS } from '../queries/clientQueries';
 
 const AddClientModal = () => {
 	const [clientData, setClientData] = useState({
@@ -10,6 +13,17 @@ const AddClientModal = () => {
 
 	const { name, email, phone } = clientData;
 
+	const [addClient] = useMutation(ADD_CLIENT, {
+		variables: { name, email, phone },
+		update(cache, { data: { addClient } }) {
+			const { clients } = cache.readQuery({ query: GET_CLIENTS });
+			cache.writeQuery({
+				query: GET_CLIENTS,
+				data: { clients: [...clients, addClient] },
+			});
+		},
+	});
+
 	const onChangeHandler = e => {
 		setClientData(prevState => ({
 			...prevState,
@@ -19,7 +33,16 @@ const AddClientModal = () => {
 
 	const onSubmitHandler = e => {
 		e.preventDefault();
-		console.log(name, email, phone);
+
+		if (!name || !email || !phone) {
+			return alert('Please fill in all fields');
+		}
+		addClient(name, email, phone);
+		setClientData({
+			name: '',
+			email: '',
+			phone: '',
+		});
 	};
 
 	return (
@@ -27,8 +50,8 @@ const AddClientModal = () => {
 			<button
 				type='button'
 				className='btn btn-secondary'
-				data-toggle='modal'
-				data-target='#addClientModal'
+				data-bs-toggle='modal'
+				data-bs-target='#addClientModal'
 			>
 				<div className='d-flex align-items-center'>
 					<FaUser className='icon' />
@@ -51,12 +74,10 @@ const AddClientModal = () => {
 							</h5>
 							<button
 								type='button'
-								className='close'
-								data-dismiss='modal'
+								className='btn-close'
+								data-bs-dismiss='modal'
 								aria-label='Close'
-							>
-								<span aria-hidden='true'>&times;</span>
-							</button>
+							></button>
 						</div>
 						<div className='modal-body'>
 							<form onSubmit={onSubmitHandler}>
@@ -66,7 +87,6 @@ const AddClientModal = () => {
 										type='text'
 										className='form-control'
 										name='name'
-										id='name'
 										value={name}
 										onChange={onChangeHandler}
 									/>
@@ -77,7 +97,6 @@ const AddClientModal = () => {
 										type='email'
 										className='form-control'
 										name='email'
-										id='email'
 										value={email}
 										onChange={onChangeHandler}
 									/>
@@ -88,15 +107,14 @@ const AddClientModal = () => {
 										type='text'
 										className='form-control'
 										name='phone'
-										id='phone'
 										value={phone}
 										onChange={onChangeHandler}
 									/>
 								</div>
 								<button
-									className='btn btn-secondary'
 									type='submit'
-									data-dismiss='modal'
+									data-bs-dismiss='modal'
+									className='btn btn-secondary'
 								>
 									Submit
 								</button>
