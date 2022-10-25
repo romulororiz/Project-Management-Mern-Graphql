@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { GET_CLIENTS } from '../queries/clientQueries';
 import ClientRow from './ClientRow';
+import Spinner from './Spinner';
 
 const Clients = () => {
 	const { loading, error, data } = useQuery(GET_CLIENTS);
 
 	console.log(data);
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <Spinner />;
 	if (error) return <p>Something Went Wrong</p>;
 
 	return (
