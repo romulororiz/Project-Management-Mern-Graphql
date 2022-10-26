@@ -1,7 +1,7 @@
 import { FaEnvelope, FaIdBadge, FaPhone } from 'react-icons/fa';
 
 const ClientInfo = ({ client }) => {
-	const { id, name, email, phone } = client;
+	const { name, email, phone } = client;
 
 	return (
 		<>
