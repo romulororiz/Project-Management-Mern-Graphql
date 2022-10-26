@@ -7,7 +7,7 @@ const Projects = () => {
 	const { loading, error, data } = useQuery(GET_PROJECTS);
 
 	if (loading) return <Spinner />;
-	if (error) return 'Something Went Wrong';
+	if (error) return <p>Something Went Wrong</p>;
 
 	console.log(data);
 
