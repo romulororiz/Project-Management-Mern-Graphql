@@ -39,7 +39,7 @@ const AddProjectModal = () => {
 	const onSubmitHandler = e => {
 		e.preventDefault();
 
-		if (!name || !description || !status || !clientId) {
+		if (!name || !description || !status) {
 			return alert('Please fill in all fields');
 		}
 
