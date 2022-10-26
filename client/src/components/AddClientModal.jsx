@@ -37,7 +37,9 @@ const AddClientModal = () => {
 		if (!name || !email || !phone) {
 			return alert('Please fill in all fields');
 		}
+
 		addClient(name, email, phone);
+
 		setClientData({
 			name: '',
 			email: '',
