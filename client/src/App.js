@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Project from './pages/Project';
 
+// Handle cache error console
 const cache = new InMemoryCache({
 	typePolicies: {
 		Query: {
@@ -25,7 +26,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-	uri: 'http://localhost:5000/graphql',
+	uri: '/graphql',
 	cache: cache,
 });
 
