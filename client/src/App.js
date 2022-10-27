@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Project from './pages/Project';
 
+// Handle cache error console
 const cache = new InMemoryCache({
 	typePolicies: {
 		Query: {
