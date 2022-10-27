@@ -28,11 +28,11 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, '../client/build')));
 
 	app.get('*', (req, res) => {
-		res.sendFile(__dirname, '../', 'client', 'build', 'index.html');
+		res.sendFile(__dirname, '../client/src/build/index.html');
 	});
 } else {
 	app.get('/', (req, res) => {
-		res.status(200).json({ message: 'Welcome to the Project Mgmt App' });
+		res.status(200).json({ message: 'Welcome to the ProjectMgmt App' });
 	});
 }
 
